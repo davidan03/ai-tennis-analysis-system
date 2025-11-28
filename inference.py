@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 
-model = YOLO("./training/best.pt")
+model = YOLO("./training/yolo11x_best_tennis_ball_detector.pt")
 
 result = model.track("./inputs/input_video.mp4",
                        save=True,
