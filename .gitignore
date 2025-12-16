@@ -5,3 +5,5 @@ utils/__pycache__/
 trackers/__pycache__/
 court_line_detector/__pycache__/
 tracker_stubs/
+constants/__pycache__/
+mini_court/__pycache__/
