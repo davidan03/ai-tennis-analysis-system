@@ -3,7 +3,8 @@ import cv2
 def read_video(video_path):
     """
     Reads in a video from a specified video path and returns its frames
-    as a list. Each frame in the list is a NumPy array.
+    as a list. Each frame in the list is a NumPy array. The shape of a
+    frame is (height, width, channels)
     """
     cap = cv2.VideoCapture(video_path)
     frames = []
