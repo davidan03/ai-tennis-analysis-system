@@ -2,6 +2,7 @@ from utils import read_video, save_video
 from trackers import PlayerTracker, BallTracker
 from court_line_detector import CourtLineDetector
 import cv2
+from mini_court import MiniCourt
 
 def main():
     # Declare video path and read video frames
@@ -20,6 +21,9 @@ def main():
 
     # Create CourtLineDetector object using the trained CNN
     court_line_detector = CourtLineDetector("models/keypoints_model.pth")
+
+    # Create MiniCourt object to draw the real-time mini court in the top right of the video
+    mini_court = MiniCourt(video_frames[0])
 
     # Retrieve list of dictionaries of player IDs to bounding box coordinates
     player_detections = player_tracker.detect_frames(video_frames,
@@ -44,6 +48,9 @@ def main():
     # Draw bounding boxes on the video frames
     output_video_frames = player_tracker.draw_bounding_boxes(video_frames, player_detections)
     output_video_frames = ball_tracker.draw_bounding_boxes(video_frames, ball_detections)
+
+    # Draw mini court
+    output_video_frames = mini_court.draw_mini_court(output_video_frames)
 
     # Write frame number in top left corner for each frame
     for i, frame in enumerate(output_video_frames):
