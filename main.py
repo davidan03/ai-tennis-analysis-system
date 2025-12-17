@@ -45,12 +45,23 @@ def main():
     # Filter for only the two actual players
     player_detections = player_tracker.filter_players(court_keypoints, player_detections)
 
+    # Convert positions to mini court positions
+    player_mini_court_detections, ball_mini_court_detections = mini_court.convert_bounding_boxes_to_mini_court_coordinates(player_detections,
+                                                                                                                           ball_detections,
+                                                                                                                           court_keypoints)
+
     # Draw bounding boxes on the video frames
     output_video_frames = player_tracker.draw_bounding_boxes(video_frames, player_detections)
     output_video_frames = ball_tracker.draw_bounding_boxes(video_frames, ball_detections)
 
     # Draw mini court
     output_video_frames = mini_court.draw_mini_court(output_video_frames)
+
+    # Draw real-time player movement on mini court
+    output_video_frames = mini_court.draw_points_on_mini_court(output_video_frames, player_mini_court_detections, color=(255, 0, 0))
+
+    # Draw real-time ball movement on mini court
+    output_video_frames = mini_court.draw_points_on_mini_court(output_video_frames, ball_mini_court_detections)
 
     # Write frame number in top left corner for each frame
     for i, frame in enumerate(output_video_frames):
